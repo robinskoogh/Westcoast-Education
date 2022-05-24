@@ -1,0 +1,99 @@
+.details-container {
+    margin-top: 2rem;
+
+}
+
+.course-description {
+    font-style: italic;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.details-info {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    gap: .4rem;
+}
+
+.details-info strong {
+    float: right;
+}
+
+.details-curriculum {
+    margin-top: 2rem;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.details-curriculum p {
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+    line-height: 1.8rem;
+}
+
+
+
+
+
+
+
+@media (min-width: 768px) {
+    .details-container {
+        margin-left: 3rem;
+    }
+
+    .course-description {
+        text-align: start;
+        margin-left: 3rem;
+        font-size: 1.495rem;
+    }
+
+    .details-info {
+        margin: inherit;
+        font-size: 1.4rem;
+        width: 45%;
+    }
+
+    .details-curriculum {
+        font-size: 1.8rem;
+        text-align: inherit;
+        width: 75%;
+        margin-left: 2rem;
+    }
+
+    .details-curriculum p {
+        font-size: 1.4rem;
+        margin-top: 0.7rem;
+        margin-left: 1rem;
+
+    }
+}
+
+@media (min-width: 980px) {
+    .course-description {
+        font-size: 1.625rem;
+    }
+
+    .details-info {
+        width: 35%;
+    }
+}
+
+@media (min-width: 1184px) {
+    .course-description {
+        font-size: 1.95rem;
+    }
+
+    .details-info {
+        width: 30%;
+    }
+
+    .details-curriculum {
+        width: 55%;
+
+    }
+}

@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Macondo&family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    font-family: var(--ubuntu);
+    background-color: var(--primary-color-light);
+}
+
+main {
+    position: relative;
+    top: 4.5rem;
+    padding: 3.5rem 2rem;
+    color: var(--primary-text-color);
+}
+
+#navbar {
+    background: var(--primary-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    font-family: var(--ubuntu);
+}
+
+#navbar ul {
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: 3;
+    transition: .3s ease-out;
+    clear: both;
+    max-height: 0;
+}
+
+.show {
+    max-height: 15rem !important;
+}
+
+#navbar li a {
+    display: block;
+    text-decoration: none;
+    color: var(--primary-text-color);
+    background-color: var(--bg-color-light);
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 1rem;
+    text-align: end;
+    width: 100%;
+    height: 100%;
+    padding-right: 3rem;
+    transition: 0.2s;
+}
+
+#navbar li a:hover {
+    background-color: var(--bg-color);
+}
+
+#navbar .nav-icon {
+    font-size: 2rem;
+    color: var(--primary-text-color);
+    cursor: pointer;
+    padding: 28px 20px;
+    float: right;
+    user-select: none;
+    margin-right: 2rem;
+}
+
+#navbar img {
+    width: 190px;
+    text-decoration: none;
+    margin: auto;
+    margin: .2rem;
+}
+
+.page-title {
+    font-family: var(--ubuntu);
+    text-align: center;
+    font-size: 2rem;
+}
+
+
+@media (min-width: 768px) {
+
+    main {
+        top: 6.5rem;
+    }
+
+    #navbar .nav-icon {
+        display: none;
+    }
+
+    #navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 6.5rem;
+    }
+
+    #navbar ul {
+        display: flex;
+        overflow: visible;
+        justify-content: flex-end;
+        height: 80%;
+        align-items: center;
+        padding: 0.5rem 2rem 0.5rem 0.5rem;
+        gap: 1rem;
+    }
+
+    #navbar li a {
+        background-color: var(--primary-color);
+        font-size: 1.3rem;
+        padding: 1.2rem;
+        /* box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 0.25rem; */
+    }
+
+    #navbar li a:hover,
+    .navlink-active {
+        background-color: var(--primary-color-light) !important;
+        box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.50) !important;
+        border-radius: 0.25rem;
+    }
+
+    #navbar li a:active {
+        background-color: var(--primary-color);
+    }
+
+    #navbar img {
+        width: 190px;
+        text-decoration: none;
+        margin: auto;
+        margin: .2rem;
+    }
+
+    .page-title {
+        font-family: var(--ubuntu);
+        text-align: start;
+        margin-left: 4rem;
+        font-size: 2.3rem;
+    }
+}
+
+@media (min-width: 980px) {
+    #navbar li a {
+        font-size: 1.5rem;
+    }
+
+    .page-title {
+        font-family: var(--ubuntu);
+        text-align: start;
+        margin-left: 4rem;
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 1184px) {
+    .page-title {
+        font-size: 3rem;
+    }
+}

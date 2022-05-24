@@ -1,0 +1,20 @@
+[
+    {
+        "FirstName": "Robin",
+        "LastName": "Skoogh",
+        "Email": "robin.skoogh@gmail.com",
+        "Phonenumber": "0731234567",
+        "StreetAddress": "Snövägen 220A",
+        "ZipCode": 97634,
+        "City": "Luleå"
+    },
+    {
+        "FirstName": "Alfons",
+        "LastName": "Åberg",
+        "Email": "alfons@gmail.com",
+        "Phonenumber": "0731234567",
+        "StreetAddress": "Gatan 22",
+        "ZipCode": 12345,
+        "City": "Staden"
+    }
+]

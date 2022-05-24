@@ -1,0 +1,41 @@
+[
+    {
+        "Name": ".NET"
+    },
+    {
+        "Name": "JavaScript"
+    },
+    {
+        "Name": "Docker"
+    },
+    {
+        "Name": "Rust"
+    },
+    {
+        "Name": "Git"
+    },
+    {
+        "Name": "C"
+    },
+    {
+        "Name": "Go"
+    },
+    {
+        "Name": "Python"
+    },
+    {
+        "Name": "TypeScript"
+    },
+    {
+        "Name": "React"
+    },
+    {
+        "Name": "ASP.NET Core"
+    },
+    {
+        "Name": "C#"
+    },
+    {
+        "Name": "Java"
+    }
+]

@@ -1,0 +1,16 @@
+:root {
+    --moacondo: 'Macondo', cursive;
+    --ubuntu: 'Ubuntu', sans-serif;
+    --bg-color: #E1E2E1;
+    --bg-color-dark: #9b9b9b;
+    --bg-color-light: #F5F5F6;
+    --senconrady-bg-color: #fff;
+    --primary-color: #c6f1e7;
+    --primary-color-dark: #95beb5;
+    --primary-color-light: #f9ffff;
+    --primary-complementary-color: #f1c6d0;
+
+    --primary-text-color: #59606d;
+
+    --primary-hover-color: #97DBCC;
+}
