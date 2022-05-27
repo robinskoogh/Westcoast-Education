@@ -1,9 +1,11 @@
+using System.Security.Claims;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Course_API.Data;
 using Course_API.Interfaces;
 using Course_API.Models;
 using Course_API.ViewModels.TeacherViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Course_API.Repositories
@@ -12,15 +14,28 @@ namespace Course_API.Repositories
     {
         private readonly CourseContext _context;
         private readonly IMapper _mapper;
-        public TeacherRepository(CourseContext context, IMapper mapper)
+        private readonly UserManager<AppUser> _userManager;
+        public TeacherRepository(CourseContext context, IMapper mapper, UserManager<AppUser> userManager)
         {
+            _userManager = userManager;
             _mapper = mapper;
             _context = context;
         }
 
         public async Task<List<TeacherViewModel>> ListTeachersAsync()
         {
-            var teachers = await _context.Teachers.Include(t => t.AreasOfExpertise).ToListAsync();
+            var users = await _context.Users.Include(t => t.AreasOfExpertise).ToListAsync();
+
+            var teacherClaims = await _userManager.GetUsersForClaimAsync(new Claim("Teacher", "true"));
+
+            List<AppUser> teachers = new();
+
+            foreach (var teacher in teacherClaims)
+            {
+                var teacherWithClaim = users.Where(t => t.Id == teacher.Id).SingleOrDefault();
+
+                teachers.Add(teacherWithClaim!);
+            }
 
             List<TeacherViewModel> teacherViewModels = new();
 
@@ -28,7 +43,7 @@ namespace Course_API.Repositories
             {
                 List<string> areasOfExpertise = new();
 
-                foreach (var aoe in teacher.AreasOfExpertise)
+                foreach (var aoe in teacher.AreasOfExpertise!)
                 {
                     areasOfExpertise.Add(aoe.Name!);
                 }
@@ -43,15 +58,15 @@ namespace Course_API.Repositories
             return teacherViewModels;
         }
 
-        public async Task<TeacherViewModel?> GetTeacherByIdAsync(int id)
+        public async Task<TeacherViewModel?> GetTeacherByIdAsync(string id)
         {
-            var teacher = await _context.Teachers.Include(t => t.AreasOfExpertise).SingleOrDefaultAsync(t => t.Id == id);
+            var teacher = await _context.Users.Include(t => t.AreasOfExpertise).SingleOrDefaultAsync(t => t.Id == id);
 
             if (teacher is null) return null;
 
             List<string> areasOfExpertise = new();
 
-            foreach (var aoe in teacher.AreasOfExpertise)
+            foreach (var aoe in teacher.AreasOfExpertise!)
             {
                 areasOfExpertise.Add(aoe.Name!);
             }
@@ -61,18 +76,17 @@ namespace Course_API.Repositories
             teacherViewModel.AreasOfExpertise = areasOfExpertise;
 
             return teacherViewModel;
-
         }
 
         public async Task<TeacherViewModel?> GetTeacherByEmailAsync(string email)
         {
-            var teacher = await _context.Teachers.Include(t => t.AreasOfExpertise).SingleOrDefaultAsync(t => t.Email == email);
+            var teacher = await _context.Users.Include(t => t.AreasOfExpertise).SingleOrDefaultAsync(t => t.Email == email);
 
             if (teacher is null) return null;
 
             List<string> areasOfExpertise = new();
 
-            foreach (var aoe in teacher.AreasOfExpertise)
+            foreach (var aoe in teacher.AreasOfExpertise!)
             {
                 areasOfExpertise.Add(aoe.Name!);
             }
@@ -82,15 +96,11 @@ namespace Course_API.Repositories
             teacherViewModel.AreasOfExpertise = areasOfExpertise;
 
             return teacherViewModel;
-
         }
 
         public async Task AddTeacherAsync(PostTeacherViewModel teacher)
         {
-            var teacherToAdd = _mapper.Map<Teacher>(teacher);
-
-            if (await _context.Teachers.Where(t => t.Email == teacher.Email).SingleOrDefaultAsync() is not null)
-                throw new Exception($"There is already a teacher using the Email: {teacher.Email} registered in the database");
+            var teacherToAdd = _mapper.Map<AppUser>(teacher);
 
             List<Category> areasOfExpertise = new();
 
@@ -115,12 +125,17 @@ namespace Course_API.Repositories
 
             teacherToAdd.AreasOfExpertise = areasOfExpertise;
 
-            await _context.Teachers.AddAsync(teacherToAdd);
+            var result = await _userManager.CreateAsync(teacherToAdd, teacher.Password);
+
+            if (!result.Succeeded)
+                throw new Exception("An error occurred while attempting to create the teacher");
+
+            await _userManager.AddClaimAsync(teacherToAdd, new Claim("Teacher", "true"));
         }
 
-        public async Task UpdateTeacherAsync(int id, PostTeacherViewModel teacher)
+        public async Task UpdateTeacherAsync(string id, PostTeacherViewModel teacher)
         {
-            var teacherToUpdate = await _context.Teachers.Include(t => t.AreasOfExpertise).Where(t => t.Id == id).SingleOrDefaultAsync();
+            var teacherToUpdate = await _context.Users.Include(t => t.AreasOfExpertise).Where(t => t.Id == id).SingleOrDefaultAsync();
 
             if (teacherToUpdate is null)
                 throw new Exception($"There is no teacher with Id: {id} in the database");
@@ -153,29 +168,36 @@ namespace Course_API.Repositories
 
             teacherToUpdate.AreasOfExpertise = areasOfExpertise;
 
-            _context.Update(teacherToUpdate);
+            var result = await _userManager.UpdateAsync(teacherToUpdate);
+
+            if (!result.Succeeded)
+                throw new Exception("An error occurred while attempting to update the teacher");
         }
 
-        public async Task DeleteTeacherByIdAsync(int id)
+        public async Task DeleteTeacherByIdAsync(string id)
         {
-            var teacherToDelete = await _context.Teachers.FindAsync(id);
+            var teacherToDelete = await _context.Users.FindAsync(id);
 
             if (teacherToDelete is null)
                 throw new Exception($"There is no teacher with Id: {id} in the database");
 
-            _context.Remove(teacherToDelete);
+            var result = await _userManager.DeleteAsync(teacherToDelete);
+
+            if (!result.Succeeded)
+                throw new Exception("An error occurred while attempting to delete the teacher");
         }
 
         public async Task DeleteTeacherByEmailAsync(string email)
         {
-            var teacherToDelete = await _context.Teachers.Where(t => t.Email == email).SingleOrDefaultAsync();
+            var teacherToDelete = await _context.Users.Where(t => t.Email == email).SingleOrDefaultAsync();
 
             if (teacherToDelete is null)
                 throw new Exception($"There is no teacher with Email: {email} in the database");
 
-            _context.Remove(teacherToDelete);
-        }
+            var result = await _userManager.DeleteAsync(teacherToDelete);
 
-        public async Task<bool> SaveAllChangesAsync() => await _context.SaveChangesAsync() > 0;
+            if (!result.Succeeded)
+                throw new Exception("An error occurred while attempting to delete the teacher");
+        }
     }
 }

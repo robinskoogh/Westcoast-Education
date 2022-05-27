@@ -7,8 +7,7 @@ namespace Course_API.ViewModels.CourseViewModels
     {
         public int CourseNo { get; set; }
         public string? Name { get; set; }
-        public int Length { get; set; }
-        public string? LengthUnit { get; set; }
+        public string? Duration { get; set; }
         [Required]
         public string? Category { get; set; }
         public string? Description { get; set; }

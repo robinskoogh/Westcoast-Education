@@ -2,8 +2,7 @@
     {
         "CourseNo": 1125,
         "Name": "JavaScript for Beginners",
-        "Length": 20,
-        "LengthUnit": "hours",
+        "Duration": "20 hours",
         "Category": "JavaScript",
         "Description": "An introductary course in JavaScript for beginners with no prior knowledge about programming",
         "Details": "This is where the details about this JavaScript course should go",
@@ -12,8 +11,7 @@
     {
         "CourseNo": 1285,
         "Name": "Dockerizing your life",
-        "Length": 70,
-        "LengthUnit": "hours",
+        "Duration": "70 hours",
         "Category": "Docker",
         "Description": "If you know what docker is, this course is everything you need to get the knowledge required. If you are unfamiliar with Docker, this course will change your life!",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -22,8 +20,7 @@
     {
         "CourseNo": 1490,
         "Name": "Rust for .NET Developers",
-        "Length": 54,
-        "LengthUnit": "hours",
+        "Duration": "54 hours",
         "Category": "Rust",
         "Description": "An introductary course in Rust for beginners with no prior knowledge about programming",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -32,8 +29,7 @@
     {
         "CourseNo": 1685,
         "Name": "Java: More than coffee",
-        "Length": 43,
-        "LengthUnit": "hours",
+        "Duration": "43 hours",
         "Category": "Java",
         "Description": "Learn the basics of the Java programming language",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -42,8 +38,7 @@
     {
         "CourseNo": 1540,
         "Name": "Git for beginners",
-        "Length": 10,
-        "LengthUnit": "hours",
+        "Duration": "10 hours",
         "Category": "Git",
         "Description": "By the end of this course, you will wonder why you didn't take it earlier",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -52,8 +47,7 @@
     {
         "CourseNo": 1975,
         "Name": "C: The third letter of the alphabet",
-        "Length": 2000,
-        "LengthUnit": "hours",
+        "Duration": "2000 hours",
         "Category": "C",
         "Description": "This is it.",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -62,8 +56,7 @@
     {
         "CourseNo": 1190,
         "Name": "Advanced C#",
-        "Length": 76,
-        "LengthUnit": "hours",
+        "Duration": "76 hours",
         "Category": "C#",
         "Description": "More C#",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -72,8 +65,7 @@
     {
         "CourseNo": 1455,
         "Name": "TypeScript for C# Developers",
-        "Length": 40,
-        "LengthUnit": "hours",
+        "Duration": "40 hours",
         "Category": "TypeScript",
         "Description": "Let's learn TypeScript!",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -82,8 +74,7 @@
     {
         "CourseNo": 1115,
         "Name": "Python 101",
-        "Length": 50,
-        "LengthUnit": "hours",
+        "Duration": "50 hours",
         "Category": "Python",
         "Description": "Learn Python!",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -92,8 +83,7 @@
     {
         "CourseNo": 1015,
         "Name": "Go",
-        "Length": 70,
-        "LengthUnit": "hours",
+        "Duration": "70 hours",
         "Category": "Go",
         "Description": "Go",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",
@@ -102,8 +92,7 @@
     {
         "CourseNo": 1175,
         "Name": "C# for Beginners",
-        "Length": 25,
-        "LengthUnit": "Hours",
+        "Duration": "25 hours",
         "Category": "C#",
         "Description": "An introductary course in C# for beginners with no prior knowledge about programming",
         "Details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi quis, voluptate omnis at dolorum cumque fugiat veniam consectetur molestias porro repellendus doloribus doloremque quod magni voluptas praesentium enim possimus ullam eveniet illum quam, minus temporibus. Iusto nisi voluptates dolorum ad ipsum cupiditate deleniti ipsam, ut odit, tenetur magni aliquid quibusdam!",

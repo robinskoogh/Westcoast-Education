@@ -5,7 +5,6 @@ import './course-details.css';
 
 function CourseDetails() {
     const params = useParams();
-    console.log(params);
 
     const [course, setCourse] = useState({})
 

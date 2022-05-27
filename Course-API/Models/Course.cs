@@ -7,14 +7,13 @@ namespace Course_API.Models
         public int Id { get; set; }
         public int CourseNo { get; set; }
         public string? Name { get; set; }
-        public int Length { get; set; }
-        public string? LengthUnit { get; set; }
+        public string? Duration { get; set; }
         public int CategoryId { get; set; }
         public string? Description { get; set; }
         public string? Details { get; set; }
 
         [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
-        public List<StudentCourse> Students { get; set; } = new();
+        public ICollection<AppUser> Students { get; set; } = new List<AppUser>();
     }
 }

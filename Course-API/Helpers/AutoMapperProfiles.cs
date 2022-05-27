@@ -12,22 +12,16 @@ namespace Course_API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Course, CourseViewModel>()
-                .ForMember(dest => dest.Category, opt => opt.Ignore())
-                .ForMember(dest => dest.Length, opt =>
-                    opt.MapFrom(src =>
-                        string.Concat(src.Length, " ", src.LengthUnit)));
+                .ForMember(dest => dest.Category, opt => opt.Ignore());
 
             CreateMap<Course, CourseOverviewViewModel>()
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category!.Name))
-                .ForMember(dest => dest.Length, opt =>
-                    opt.MapFrom(src =>
-                        string.Concat(src.Length, " ", src.LengthUnit)));
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category!.Name));
 
             CreateMap<PostCourseViewModel, Course>()
                 .ForMember(dest => dest.Category, opt => opt.Ignore());
 
 
-            CreateMap<Student, StudentViewModel>()
+            CreateMap<AppUser, StudentViewModel>()
                 .ForMember(dest => dest.Name, opt =>
                     opt.MapFrom(src =>
                         string.Concat(src.FirstName, " ", src.LastName)))
@@ -35,10 +29,11 @@ namespace Course_API.Helpers
                     opt.MapFrom(src =>
                         string.Concat(src.StreetAddress, ", ", src.ZipCode, ", ", src.City)));
 
-            CreateMap<PostStudentViewModel, Student>();
+            CreateMap<PostStudentViewModel, AppUser>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
 
 
-            CreateMap<Teacher, TeacherViewModel>()
+            CreateMap<AppUser, TeacherViewModel>()
                 .ForMember(dest => dest.AreasOfExpertise, opt =>
                     opt.Ignore())
                 .ForMember(dest => dest.Name, opt =>
@@ -48,9 +43,10 @@ namespace Course_API.Helpers
                     opt.MapFrom(src =>
                         string.Concat(src.StreetAddress, ", ", src.ZipCode, ", ", src.City)));
 
-            CreateMap<PostTeacherViewModel, Teacher>().ForMember(dest =>
+            CreateMap<PostTeacherViewModel, AppUser>().ForMember(dest =>
                 dest.AreasOfExpertise, opt =>
-                    opt.Ignore());
+                    opt.Ignore())
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
 
 
             CreateMap<Category, CategoryViewModel>();

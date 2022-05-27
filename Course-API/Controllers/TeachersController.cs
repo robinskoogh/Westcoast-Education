@@ -18,7 +18,7 @@ namespace Course_API.Controllers
         public async Task<ActionResult<List<TeacherViewModel>>> ListTeachersAsync() => await _teacherRepo.ListTeachersAsync();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TeacherViewModel>> GetTeacherByIdAsync(int id)
+        public async Task<ActionResult<TeacherViewModel>> GetTeacherByIdAsync(string id)
         {
             var response = await _teacherRepo.GetTeacherByIdAsync(id);
 
@@ -38,9 +38,12 @@ namespace Course_API.Controllers
         {
             try
             {
+                if (await _teacherRepo.GetTeacherByEmailAsync(teacher.Email!) is not null)
+                    return BadRequest($"The email address {teacher.Email} is already in use");
+
                 await _teacherRepo.AddTeacherAsync(teacher);
 
-                return await _teacherRepo.SaveAllChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting to add the teacher to the database");
+                return StatusCode(201);
             }
             catch (Exception ex)
             {
@@ -49,13 +52,13 @@ namespace Course_API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTeacherAsync(int id, PostTeacherViewModel teacher)
+        public async Task<ActionResult> UpdateTeacherAsync(string id, PostTeacherViewModel teacher)
         {
             try
             {
                 await _teacherRepo.UpdateTeacherAsync(id, teacher);
 
-                return await _teacherRepo.SaveAllChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting to save the update of the teacher to the database");
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -64,13 +67,13 @@ namespace Course_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTeacherByIdAsync(int id)
+        public async Task<ActionResult> DeleteTeacherByIdAsync(string id)
         {
             try
             {
                 await _teacherRepo.DeleteTeacherByIdAsync(id);
 
-                return await _teacherRepo.SaveAllChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting delete the teacher from the database");
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -85,7 +88,7 @@ namespace Course_API.Controllers
             {
                 await _teacherRepo.DeleteTeacherByEmailAsync(email);
 
-                return await _teacherRepo.SaveAllChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting delete the teacher from the database");
+                return NoContent();
             }
             catch (Exception ex)
             {

@@ -1,7 +1,9 @@
+using System.Security.Claims;
 using System.Text.Json;
 using Course_API.Models;
 using Course_API.ViewModels.CourseViewModels;
 using Course_API.ViewModels.TeacherViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Course_API.Data
@@ -27,8 +29,7 @@ namespace Course_API.Data
                     {
                         CourseNo = course.CourseNo,
                         Name = course.Name,
-                        Length = course.Length,
-                        LengthUnit = course.LengthUnit,
+                        Duration = course.Duration,
                         Description = course.Description,
                         Details = course.Details,
                         Category = category
@@ -38,35 +39,37 @@ namespace Course_API.Data
                 }
             }
 
-
             await context.SaveChangesAsync();
         }
 
-        public static async Task SeedStudents(CourseContext context)
+        public static async Task SeedUsers(CourseContext context, UserManager<AppUser> userManager)
         {
-            if (await context.Students.AnyAsync()) return;
+            if (await context.Users.AnyAsync()) return;
 
             var studentData = await File.ReadAllTextAsync("Data/SeedData/students.json");
-            var students = JsonSerializer.Deserialize<List<Student>>(studentData);
+            var students = JsonSerializer.Deserialize<List<AppUser>>(studentData);
 
-            await context.AddRangeAsync(students!);
-            await context.SaveChangesAsync();
-        }
+            if (students is null) return;
 
-        public static async Task SeedCategories(CourseContext context)
-        {
-            if (await context.Categories.AnyAsync()) return;
+            foreach (var student in students)
+            {
+                var newStudent = new AppUser()
+                {
+                    UserName = student.Email,
+                    FirstName = student.FirstName,
+                    LastName = student.LastName,
+                    Email = student.Email,
+                    PhoneNumber = student.PhoneNumber,
+                    StreetAddress = student.StreetAddress,
+                    ZipCode = student.ZipCode,
+                    City = student.City,
+                    Courses = new List<Course>()
+                };
 
-            var categoryData = await File.ReadAllTextAsync("Data/SeedData/categories.json");
-            var categories = JsonSerializer.Deserialize<List<Category>>(categoryData);
+                await userManager.CreateAsync(newStudent);
 
-            await context.AddRangeAsync(categories!);
-            await context.SaveChangesAsync();
-        }
-
-        public static async Task SeedTeachers(CourseContext context)
-        {
-            if (await context.Teachers.AnyAsync()) return;
+                await userManager.AddClaimAsync(newStudent, new Claim("Student", "true"));
+            }
 
             var teacherData = await File.ReadAllTextAsync("Data/SeedData/teachers.json");
             var teachers = JsonSerializer.Deserialize<List<PostTeacherViewModel>>(teacherData);
@@ -85,8 +88,9 @@ namespace Course_API.Data
                         areasOfExpertise.Add(areaOfExpertise);
                 }
 
-                var newTeacher = new Teacher()
+                var newTeacher = new AppUser()
                 {
+                    UserName = teacher.Email,
                     FirstName = teacher.FirstName,
                     LastName = teacher.LastName,
                     Email = teacher.Email,
@@ -97,9 +101,22 @@ namespace Course_API.Data
                     AreasOfExpertise = areasOfExpertise
                 };
 
-                context.Teachers.Add(newTeacher);
+                await userManager.CreateAsync(newTeacher);
+
+                await userManager.AddClaimAsync(newTeacher, new Claim("Teacher", "true"));
             }
 
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task SeedCategories(CourseContext context)
+        {
+            if (await context.Categories.AnyAsync()) return;
+
+            var categoryData = await File.ReadAllTextAsync("Data/SeedData/categories.json");
+            var categories = JsonSerializer.Deserialize<List<Category>>(categoryData);
+
+            await context.AddRangeAsync(categories!);
             await context.SaveChangesAsync();
         }
     }

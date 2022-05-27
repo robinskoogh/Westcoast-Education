@@ -45,7 +45,6 @@ namespace Course_API.Repositories
             courseViewModel.Category = course.Category!.Name;
 
             return courseViewModel;
-
         }
 
         public async Task AddCourseAsync(PostCourseViewModel course)
