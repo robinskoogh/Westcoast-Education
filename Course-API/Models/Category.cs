@@ -12,6 +12,6 @@ namespace Course_API.Models
         [Required]
         public string? Name { get; set; }
         public ICollection<Course> Courses { get; set; } = new List<Course>();
-        public ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
+        public ICollection<AppUser> Teachers { get; set; } = new List<AppUser>();
     }
 }

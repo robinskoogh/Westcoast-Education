@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Course_API.Helpers;
 using Course_API.Interfaces;
 using Course_API.Repositories;
+using Course_API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CourseContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 {
     opt.Password.RequireDigit = true;
     opt.Password.RequireLowercase = true;
     opt.Password.RequireUppercase = true;
     opt.Password.RequireNonAlphanumeric = true;
     opt.Password.RequiredLength = 8;
+
+    opt.User.RequireUniqueEmail = true;
 
     opt.Lockout.MaxFailedAccessAttempts = 5;
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(25);
@@ -49,6 +52,13 @@ builder.Services.AddControllers().AddNewtonsoftJson(opt =>
     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("Students", policy => policy.RequireClaim("Student"));
+    opt.AddPolicy("Teachers", policy => policy.RequireClaim("Teacher"));
+    opt.AddPolicy("Admins", policy => policy.RequireClaim("Admin"));
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -76,11 +86,11 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<CourseContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
     await SeedDatabase.SeedCategories(context);
     await SeedDatabase.SeedCourses(context);
-    await SeedDatabase.SeedStudents(context);
-    await SeedDatabase.SeedTeachers(context);
+    await SeedDatabase.SeedUsers(context, userManager);
 }
 catch (Exception ex)
 {

@@ -62,7 +62,7 @@ function CourseList() {
                         <div className="card-header">
                             <div>No.</div>
                             <div>Course</div>
-                            <div>Length</div>
+                            <div>Duration</div>
                         </div>
                         {filteredCourses.map((course) => (
                             <CourseCard

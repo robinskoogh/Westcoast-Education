@@ -1,12 +1,10 @@
 using Course_API.Models;
+using Course_API.ViewModels.AuthViewModels;
 
 namespace Course_API.ViewModels.StudentViewModels
 {
-    public class StudentViewModel
+    public class StudentViewModel : UserViewModel
     {
-        public string? Name { get; set; }
-        public string? Email { get; set; }
-        public string? Phonenumber { get; set; }
-        public string? Address { get; set; }
+        public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

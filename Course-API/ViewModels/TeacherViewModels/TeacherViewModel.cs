@@ -1,13 +1,10 @@
 using Course_API.Models;
+using Course_API.ViewModels.AuthViewModels;
 
 namespace Course_API.ViewModels.TeacherViewModels
 {
-    public class TeacherViewModel
+    public class TeacherViewModel : UserViewModel
     {
-        public string? Name { get; set; }
-        public string? Email { get; set; }
-        public string? Phonenumber { get; set; }
-        public string? Address { get; set; }
         public List<string>? AreasOfExpertise { get; set; }
     }
 }

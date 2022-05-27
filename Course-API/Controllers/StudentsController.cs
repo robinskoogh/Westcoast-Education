@@ -18,7 +18,7 @@ namespace Course_API.Controllers
         public async Task<ActionResult<List<StudentViewModel>>> ListStudentsAsync() => Ok(await _studentRepo.ListStudentsAsync());
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentViewModel>> GetStudentByIdAsync(int id)
+        public async Task<ActionResult<StudentViewModel>> GetStudentByIdAsync(string id)
         {
             var response = await _studentRepo.GetStudentByIdAsync(id);
 
@@ -36,22 +36,29 @@ namespace Course_API.Controllers
         [HttpPost]
         public async Task<ActionResult> AddStudentAsync(PostStudentViewModel student)
         {
-            await _studentRepo.AddStudentAsync(student);
+            try
+            {
+                if (await _studentRepo.GetStudentByEmailAsync(student.Email!) is not null)
+                    return BadRequest($"The email address {student.Email} is already in use");
 
-            if (await _studentRepo.GetStudentByEmailAsync(student.Email!) is not null)
-                return BadRequest("The email specified is already in use");
+                await _studentRepo.AddStudentAsync(student);
 
-            return await _studentRepo.SaveChangesAsync() ? StatusCode(201) : StatusCode(500, "An error occurred while attempting to save the student to the database");
+                return StatusCode(201);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateStudentAsync(int id, PostStudentViewModel student)
+        public async Task<ActionResult> UpdateStudentAsync(string id, PostStudentViewModel student)
         {
             try
             {
                 await _studentRepo.UpdateStudentAsync(id, student);
 
-                return await _studentRepo.SaveChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting to update the student to the database");
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -60,13 +67,13 @@ namespace Course_API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteStudentByIdAsync(int id)
+        public async Task<ActionResult> DeleteStudentByIdAsync(string id)
         {
             try
             {
                 await _studentRepo.DeleteStudentByIdAsync(id);
 
-                return await _studentRepo.SaveChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting to delete the student from the database");
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -81,7 +88,7 @@ namespace Course_API.Controllers
             {
                 await _studentRepo.DeleteStudentByEmailAsync(email);
 
-                return await _studentRepo.SaveChangesAsync() ? NoContent() : StatusCode(500, "An error occurred while attempting to delete the student from the database");
+                return NoContent();
             }
             catch (Exception ex)
             {

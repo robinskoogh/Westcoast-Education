@@ -11,7 +11,7 @@ function CourseCard({ course }) {
         <div className="card" onClick={onClickHandler}>
             <div className="course-number">{course.courseNo}</div>
             <div className="card-title">{course.name}</div>
-            <div className="course-length">{course.length}</div>
+            <div className="course-length">{course.duration}</div>
         </div>
     );
 }
